@@ -1,3 +1,5 @@
+![logo-quer](https://github.com/user-attachments/assets/eaf55c84-056c-4ac6-8575-f018d9392f28)
+
 ## 1 Task
 
 Our task is to create a campus path-finding application that computes routes under 30 minutes, including intermediate stops like cafés, restaurants, or toilets. It will integrate TU Berlin location maps, personal insider knowledge (special paths), and external APIs (e.g., BVG) to provide accurate and user-relevant routing information.
@@ -9,6 +11,8 @@ By working with unfamiliar technologies — such as new programming languages, s
 Furthermore, we focused on designing all system components to be as loosely coupled as possible. This architectural choice supports long-term maintainability, allowing the system to evolve with minimal refactoring while enabling straightforward integration of new features.
 
 ## 3 Architecture
+
+<img width="1004" alt="image" src="https://github.com/user-attachments/assets/7ca10621-566d-4c22-bb79-ed588279d31f" />
 
 The architecture of our system is composed of three main components: a **React-based frontend** for user interaction, a **Go-based API Gateway** that manages request translation and external API integration, and a **Rust-based backend** that performs routing using geospatial queries on a PostGIS-enhanced PostgreSQL database. Each layer is designed for clear separation of concerns, enabling modular development, efficient communication, and low-latency route computation.
 ### 3.1: Frontend
