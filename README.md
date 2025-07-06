@@ -1,15 +1,15 @@
 ## 1 Task
----
+
 Our task is to create a campus path-finding application that computes routes under 30 minutes, including intermediate stops like cafés, restaurants, or toilets. It will integrate TU Berlin location maps, personal insider knowledge (special paths), and external APIs (e.g., BVG) to provide accurate and user-relevant routing information.
 
 ## 2 Approach
----
+
 Our approach focuses on applying industry-relevant tools and standards to closely mirror real-world workflows and best practices (e.g. secure storage of passwords). The team was divided into smaller subteams of two, each taking ownership of a specific component and communicating strictly via well-defined APIs to enforce _Separation of Concerns_. This structure encourages accountability and ensures that each team is fully responsible for the functionality and quality of their own component.
 By working with unfamiliar technologies — such as new programming languages, specialized databases, and modern frameworks — team members were encouraged to step outside their comfort zones and expand both their technical and collaborative skills.
 Furthermore, we focused on designing all system components to be as loosely coupled as possible. This architectural choice supports long-term maintainability, allowing the system to evolve with minimal refactoring while enabling straightforward integration of new features.
 
 ## 3 Architecture
----
+
 The architecture of our system is composed of three main components: a **React-based frontend** for user interaction, a **Go-based API Gateway** that manages request translation and external API integration, and a **Rust-based backend** that performs routing using geospatial queries on a PostGIS-enhanced PostgreSQL database. Each layer is designed for clear separation of concerns, enabling modular development, efficient communication, and low-latency route computation.
 ### 3.1: Frontend
 The user interface is built with the widely adopted JavaScript framework React, extended with TypeScript for type safety and better maintainability. At its core is a Leaflet-based map, displaying the TU Berlin campus and offering a search bar to enter the desired destination. Destinations can be TU buildings, cafés, or restaurants. The starting point can either be one of these or be determined via the browser's Geolocation API.
@@ -73,7 +73,7 @@ This approach allows routing directly on the dataset without moving data out of 
 To even futher minimize the latency of a call, we introduced a Valkey (Redis fork) instance which is used to cache requested routes for an hour. In addition, precomputed building-to-building routes are persisted in a dedicated table further improve lookup speed.
 
 ## 4 Routing 
----
+
 Our routing system is based on OpenStreetMap data, using a subset of the data of Berlin which covers the Technical University of Berlin. We use osm2pgrouting for preproccesses while loading the data into the database to enable routing within the database.
 
 ### 4.1 Routing Features
@@ -86,7 +86,7 @@ Our system supports a variety of routing types:
 ### 4.2 Routing Algorithm and Weather-Dependent Weighting
 We use **Dijkstra's algorithm** via **pgRouting** (`pgr_dijkstra()`). Outdoor path weights are dynamically adjusted with a weather penalty (factor 1 for good weather, 2 for bad weather), making them less attractive when conditions worsen. Real-time weather data is provided by the middleware and passed to the Database Overlord to update routing weights on demand.
 
----
+
 ## 5 Challenges and Lessons Learned
 For most of us, was this project the first project within a larger group. So we had several challenges we had to come across, both technical and team wise.
 
@@ -100,5 +100,5 @@ Leadership and group dynamics emerged as a hidden challenge: keeping track of pr
 
 
 ## 6 On-going work
----
+
 As a next step, we plan to improve even more the request latency by adding insider knowledge to the OSM data, such as indoor pathways. These enhancements will also be contributed back to the open-source OSM project, benefiting future applications built on top of it.
